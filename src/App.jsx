@@ -1,35 +1,102 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import { AuthProvider } from './components/auth/AuthProvider';
+import { ToastProvider } from './components/ui/Toast';
+import { useAuth } from './hooks/useAuth';
+import { useTasks } from './hooks/useTasks';
+import { useCategories } from './hooks/useCategories';
+import { LoginForm } from './components/auth/LoginForm';
+import { SignupForm } from './components/auth/SignupForm';
+import { Sidebar } from './components/layout/Sidebar';
+import { MainContent } from './components/layout/MainContent';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+function AppContent() {
+  const { user, loading: authLoading, logout } = useAuth();
+  const [authMode, setAuthMode] = useState('login');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
+  const {
+    tasks,
+    loading: tasksLoading,
+    addTask,
+    updateTask,
+    deleteTask,
+    toggleComplete,
+    reorderTasks,
+    addSubtask,
+    toggleSubtask,
+    deleteSubtask
+  } = useTasks();
+
+  const {
+    categories,
+    addCategory,
+    deleteCategory,
+    DEFAULT_COLORS
+  } = useCategories();
+
+  // Show loading spinner while checking auth
+  if (authLoading) {
+    return (
+      <div className="app-loading">
+        <div className="loading-spinner" />
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  // Show auth forms if not logged in
+  if (!user) {
+    return authMode === 'login' ? (
+      <LoginForm onSwitchToSignup={() => setAuthMode('signup')} />
+    ) : (
+      <SignupForm onSwitchToLogin={() => setAuthMode('login')} />
+    );
+  }
+
+  // Main app layout
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app-layout">
+      <Sidebar
+        user={user}
+        onLogout={logout}
+        categories={categories}
+        selectedCategory={selectedCategory}
+        onSelectCategory={setSelectedCategory}
+        onAddCategory={addCategory}
+        onDeleteCategory={deleteCategory}
+        defaultColors={DEFAULT_COLORS}
+        isOpen={sidebarOpen}
+        onToggle={() => setSidebarOpen(!sidebarOpen)}
+      />
+
+      <MainContent
+        tasks={tasks}
+        categories={categories}
+        loading={tasksLoading}
+        selectedCategory={selectedCategory}
+        onAddTask={addTask}
+        onToggleTask={toggleComplete}
+        onDeleteTask={deleteTask}
+        onUpdateTask={updateTask}
+        onAddSubtask={addSubtask}
+        onToggleSubtask={toggleSubtask}
+        onDeleteSubtask={deleteSubtask}
+        onReorderTasks={reorderTasks}
+      />
+    </div>
+  );
 }
 
-export default App
+function App() {
+  return (
+    <AuthProvider>
+      <ToastProvider>
+        <AppContent />
+      </ToastProvider>
+    </AuthProvider>
+  );
+}
+
+export default App;
