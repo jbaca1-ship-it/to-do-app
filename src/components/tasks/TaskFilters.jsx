@@ -89,7 +89,6 @@ export function TaskFilters({
             onChange={(e) => onSortChange(e.target.value)}
             className="filter-select"
           >
-            <option value="default">Default Order</option>
             <option value="dueDate">Due Date</option>
             <option value="priority">Priority</option>
           </select>
