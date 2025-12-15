@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FolderOpen, Plus, X, Check } from 'lucide-react';
 import './CategoryList.css';
 
@@ -13,6 +13,21 @@ export function CategoryList({
   const [isAdding, setIsAdding] = useState(false);
   const [newName, setNewName] = useState('');
   const [newColor, setNewColor] = useState(defaultColors?.[0] || '#3b82f6');
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (formRef.current && !formRef.current.contains(e.target)) {
+        setIsAdding(false);
+        setNewName('');
+      }
+    };
+    
+    if (isAdding) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isAdding]);
 
   const handleAdd = async (e) => {
     e.preventDefault();
@@ -83,7 +98,7 @@ export function CategoryList({
       </div>
 
       {isAdding && (
-        <form onSubmit={handleAdd} className="category-add-form">
+        <form ref={formRef} onSubmit={handleAdd} className="category-add-form">
           <div className="category-color-picker">
             {defaultColors?.map((color) => (
               <button

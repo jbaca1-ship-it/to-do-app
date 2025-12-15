@@ -1,4 +1,4 @@
-import { User, LogOut, Menu, X } from 'lucide-react';
+import { User, LogOut, Menu, X, List, Calendar } from 'lucide-react';
 import { CategoryList } from '../categories/CategoryList';
 import './Sidebar.css';
 
@@ -12,11 +12,13 @@ export function Sidebar({
   onDeleteCategory,
   defaultColors,
   isOpen,
-  onToggle
+  onToggle,
+  currentView,
+  onViewChange
 }) {
   return (
     <>
-      <button className="sidebar-toggle" onClick={onToggle}>
+      <button className={`sidebar-toggle ${isOpen ? 'open' : ''}`} onClick={onToggle}>
         {isOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
 
@@ -26,12 +28,29 @@ export function Sidebar({
         </div>
 
         <div className="sidebar-content">
+          <div className="view-selector">
+            <button
+              className={`view-option ${currentView === 'list' ? 'active' : ''}`}
+              onClick={() => onViewChange('list')}
+            >
+              <List size={18} />
+              <span>Tasks</span>
+            </button>
+            <button
+              className={`view-option ${currentView === 'calendar' ? 'active' : ''}`}
+              onClick={() => onViewChange('calendar')}
+            >
+              <Calendar size={18} />
+              <span>Calendar</span>
+            </button>
+          </div>
+
           <CategoryList
             categories={categories}
             selectedCategory={selectedCategory}
             onSelectCategory={(id) => {
               onSelectCategory(id);
-              if (window.innerWidth < 768) onToggle();
+              if (window.innerWidth < 1024) onToggle();
             }}
             onAddCategory={onAddCategory}
             onDeleteCategory={onDeleteCategory}

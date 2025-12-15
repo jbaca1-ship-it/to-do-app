@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Plus, Calendar, Flag, FolderOpen } from 'lucide-react';
+import { DatePicker } from '../ui/DatePicker';
 import './TaskForm.css';
 
 export function TaskForm({ onAddTask, categories = [] }) {
@@ -83,12 +84,10 @@ export function TaskForm({ onAddTask, categories = [] }) {
 
           <div className="task-form-options">
             <div className="option-group">
-              <Calendar size={16} />
-              <input
-                type="date"
+              <DatePicker
                 value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-                className="option-input date-input"
+                onChange={setDueDate}
+                placeholder="Due date"
               />
             </div>
 

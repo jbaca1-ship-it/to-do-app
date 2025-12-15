@@ -16,7 +16,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .subtask-add-btn {
@@ -26,16 +26,16 @@
   padding: 0.35rem 0.65rem;
   border-radius: 6px;
   border: none;
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.05);
+  color: rgba(0, 0, 0, 0.6);
   font-size: 0.75rem;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .subtask-add-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.9);
+  background: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.9);
 }
 
 .subtask-item {
@@ -43,25 +43,25 @@
   align-items: center;
   gap: 0.625rem;
   padding: 0.5rem 0.625rem;
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(0, 0, 0, 0.02);
   border-radius: 8px;
   transition: background 0.2s;
 }
 
 .subtask-item:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.04);
 }
 
 .subtask-item.completed .subtask-title {
   text-decoration: line-through;
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .subtask-checkbox {
   width: 16px;
   height: 16px;
   border-radius: 4px;
-  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border: 1.5px solid rgba(0, 0, 0, 0.25);
   background: transparent;
   cursor: pointer;
   display: flex;
@@ -73,7 +73,7 @@
 }
 
 .subtask-checkbox:hover {
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(0, 0, 0, 0.4);
 }
 
 .subtask-checkbox.checked {
@@ -85,7 +85,7 @@
 .subtask-title {
   flex: 1;
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(0, 0, 0, 0.75);
 }
 
 .subtask-delete {
@@ -94,7 +94,7 @@
   border-radius: 6px;
   border: none;
   background: transparent;
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(0, 0, 0, 0.3);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -108,8 +108,8 @@
 }
 
 .subtask-delete:hover {
-  background: rgba(239, 68, 68, 0.15);
-  color: #f87171;
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
 }
 
 /* Add form */
@@ -121,21 +121,21 @@
 
 .subtask-input {
   flex: 1;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #f9fafb;
+  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 6px;
   padding: 0.5rem 0.75rem;
   font-size: 0.85rem;
-  color: #fff;
+  color: #1a1a1a;
   outline: none;
 }
 
 .subtask-input::placeholder {
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .subtask-input:focus {
-  border-color: rgba(96, 165, 250, 0.5);
+  border-color: #4b5563;
 }
 
 .subtask-confirm,
@@ -161,11 +161,11 @@
 }
 
 .subtask-cancel {
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .subtask-cancel:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.15);
 }
 

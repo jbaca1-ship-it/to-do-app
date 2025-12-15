@@ -6,14 +6,18 @@ import {
   ChevronDown, 
   ChevronUp,
   GripVertical,
-  Pencil
+  Pencil,
+  Flag,
+  FolderOpen
 } from 'lucide-react';
+import { DatePicker } from '../ui/DatePicker';
 import { SubtaskList } from './SubtaskList';
 import './TaskItem.css';
 
 export function TaskItem({ 
   task, 
   category,
+  categories = [],
   onToggle, 
   onDelete, 
   onUpdate,
@@ -26,6 +30,9 @@ export function TaskItem({
   const [isEditing, setIsEditing] = useState(false);
   const [editTitle, setEditTitle] = useState(task.title);
   const [editDescription, setEditDescription] = useState(task.description || '');
+  const [editPriority, setEditPriority] = useState(task.priority || 'medium');
+  const [editDueDate, setEditDueDate] = useState(task.dueDate || '');
+  const [editCategoryId, setEditCategoryId] = useState(task.categoryId || '');
 
   const priorityColors = {
     high: '#ef4444',
@@ -52,7 +59,10 @@ export function TaskItem({
     if (!editTitle.trim()) return;
     await onUpdate(task.id, { 
       title: editTitle.trim(), 
-      description: editDescription.trim() 
+      description: editDescription.trim(),
+      priority: editPriority,
+      dueDate: editDueDate || null,
+      categoryId: editCategoryId || null
     });
     setIsEditing(false);
   };
@@ -65,6 +75,9 @@ export function TaskItem({
     if (e.key === 'Escape') {
       setEditTitle(task.title);
       setEditDescription(task.description || '');
+      setEditPriority(task.priority || 'medium');
+      setEditDueDate(task.dueDate || '');
+      setEditCategoryId(task.categoryId || '');
       setIsEditing(false);
     }
   };
@@ -116,6 +129,48 @@ export function TaskItem({
                 className="task-edit-description"
                 rows={2}
               />
+              
+              <div className="task-edit-options">
+                <div className="edit-option-group">
+                  <DatePicker
+                    value={editDueDate}
+                    onChange={setEditDueDate}
+                    placeholder="Due date"
+                  />
+                </div>
+
+                <div className="edit-option-group">
+                  <Flag size={16} />
+                  <select
+                    value={editPriority}
+                    onChange={(e) => setEditPriority(e.target.value)}
+                    className="edit-option-input"
+                  >
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                  </select>
+                </div>
+
+                {categories.length > 0 && (
+                  <div className="edit-option-group">
+                    <FolderOpen size={16} />
+                    <select
+                      value={editCategoryId}
+                      onChange={(e) => setEditCategoryId(e.target.value)}
+                      className="edit-option-input"
+                    >
+                      <option value="">No category</option>
+                      {categories.map(cat => (
+                        <option key={cat.id} value={cat.id}>
+                          {cat.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+              </div>
+
               <div className="task-edit-actions">
                 <button onClick={() => setIsEditing(false)} className="btn-cancel-edit">
                   Cancel
@@ -132,6 +187,10 @@ export function TaskItem({
               </span>
               
               <div className="task-meta">
+                <span className={`task-priority-badge priority-${task.priority}`}>
+                  <Flag size={12} />
+                  {task.priority}
+                </span>
                 {task.dueDate && (
                   <span className={`task-due-date ${isOverdue ? 'overdue' : ''}`}>
                     <Calendar size={12} />

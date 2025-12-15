@@ -22,6 +22,7 @@ import './TaskList.css';
 function SortableTaskItem({ 
   task, 
   category, 
+  categories,
   onToggle, 
   onDelete, 
   onUpdate,
@@ -50,6 +51,7 @@ function SortableTaskItem({
       <TaskItem
         task={task}
         category={category}
+        categories={categories}
         onToggle={onToggle}
         onDelete={onDelete}
         onUpdate={onUpdate}
@@ -134,6 +136,7 @@ export function SortableTaskList({
               key={task.id}
               task={task}
               category={getCategoryById(task.categoryId)}
+              categories={categories}
               onToggle={onToggle}
               onDelete={onDelete}
               onUpdate={onUpdate}

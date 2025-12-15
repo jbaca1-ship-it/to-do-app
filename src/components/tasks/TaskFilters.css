@@ -14,7 +14,7 @@
 .search-icon {
   position: absolute;
   left: 1rem;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(0, 0, 0, 0.4);
   pointer-events: none;
 }
 
@@ -22,21 +22,22 @@
   width: 100%;
   padding: 0.875rem 2.75rem;
   font-size: 0.95rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 12px;
-  color: #fff;
+  color: #1a1a1a;
   outline: none;
   transition: all 0.2s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .search-input::placeholder {
-  color: rgba(255, 255, 255, 0.35);
+  color: rgba(0, 0, 0, 0.4);
 }
 
 .search-input:focus {
-  border-color: rgba(96, 165, 250, 0.4);
-  background: rgba(255, 255, 255, 0.05);
+  border-color: #4b5563;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
 .search-clear {
@@ -46,8 +47,8 @@
   height: 28px;
   border-radius: 8px;
   border: none;
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.08);
+  color: rgba(0, 0, 0, 0.6);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -56,8 +57,8 @@
 }
 
 .search-clear:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
+  background: rgba(0, 0, 0, 0.12);
+  color: #1a1a1a;
 }
 
 .filters-container {
@@ -67,32 +68,33 @@
   flex-wrap: wrap;
 }
 
-.filter-group {
+.filter-group,
+.sort-group {
   display: flex;
   align-items: center;
   gap: 0.625rem;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(0, 0, 0, 0.5);
 }
 
 .filter-select {
   padding: 0.5rem 0.75rem;
   font-size: 0.8rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 8px;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(0, 0, 0, 0.8);
   outline: none;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .filter-select:focus {
-  border-color: rgba(96, 165, 250, 0.4);
+  border-color: #4b5563;
 }
 
 .filter-select option {
-  background: #1a1a2e;
-  color: #fff;
+  background: #ffffff;
+  color: #1a1a1a;
 }
 
 .clear-filters {
@@ -104,14 +106,14 @@
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.2);
   border-radius: 8px;
-  color: #f87171;
+  color: #dc2626;
   cursor: pointer;
   transition: all 0.2s;
   margin-left: auto;
 }
 
 .clear-filters:hover {
-  background: rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.15);
   border-color: rgba(239, 68, 68, 0.3);
 }
 

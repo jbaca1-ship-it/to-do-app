@@ -16,14 +16,16 @@ export function MainContent({
   onAddSubtask,
   onToggleSubtask,
   onDeleteSubtask,
-  onReorderTasks
+  onReorderTasks,
+  sidebarOpen
 }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState({
-    status: 'all',
+    status: 'active',
     priority: 'all',
     dueDate: 'all'
   });
+  const [sortBy, setSortBy] = useState('default');
 
   // Filter and search tasks
   const filteredTasks = useMemo(() => {
@@ -85,13 +87,47 @@ export function MainContent({
       });
     }
 
+    // Sort tasks
+    if (sortBy !== 'default') {
+      const priorityOrder = { high: 3, medium: 2, low: 1 };
+      
+      result = [...result].sort((a, b) => {
+        if (sortBy === 'dueDate') {
+          // Sort by due date first, then by priority
+          const dateA = a.dueDate ? new Date(a.dueDate).getTime() : Infinity;
+          const dateB = b.dueDate ? new Date(b.dueDate).getTime() : Infinity;
+          
+          if (dateA !== dateB) {
+            return dateA - dateB;
+          }
+          
+          // Same date or both no date: sort by priority
+          return priorityOrder[b.priority] - priorityOrder[a.priority];
+        } else if (sortBy === 'priority') {
+          // Sort by priority first, then by due date
+          const priorityDiff = priorityOrder[b.priority] - priorityOrder[a.priority];
+          
+          if (priorityDiff !== 0) {
+            return priorityDiff;
+          }
+          
+          // Same priority: sort by due date
+          const dateA = a.dueDate ? new Date(a.dueDate).getTime() : Infinity;
+          const dateB = b.dueDate ? new Date(b.dueDate).getTime() : Infinity;
+          return dateA - dateB;
+        }
+        
+        return 0;
+      });
+    }
+
     return result;
-  }, [tasks, selectedCategory, searchQuery, filters]);
+  }, [tasks, selectedCategory, searchQuery, filters, sortBy]);
 
   const currentCategory = categories.find(c => c.id === selectedCategory);
 
   return (
-    <main className="main-content">
+    <main className={`main-content ${sidebarOpen ? 'sidebar-open' : ''}`}>
       <div className="main-header">
         <h2 className="page-title">
           {currentCategory ? (
@@ -121,6 +157,8 @@ export function MainContent({
         onSearchChange={setSearchQuery}
         filters={filters}
         onFilterChange={setFilters}
+        sortBy={sortBy}
+        onSortChange={setSortBy}
         categories={categories}
       />
 

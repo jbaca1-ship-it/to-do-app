@@ -1,4 +1,4 @@
-import { Search, Filter, X } from 'lucide-react';
+import { Search, Filter, X, ArrowUpDown } from 'lucide-react';
 import './TaskFilters.css';
 
 export function TaskFilters({ 
@@ -6,6 +6,8 @@ export function TaskFilters({
   onSearchChange,
   filters,
   onFilterChange,
+  sortBy,
+  onSortChange,
   categories 
 }) {
   const hasActiveFilters = filters.status !== 'all' || 
@@ -77,6 +79,19 @@ export function TaskFilters({
             <option value="week">Due This Week</option>
             <option value="overdue">Overdue</option>
             <option value="no-date">No Date</option>
+          </select>
+        </div>
+
+        <div className="sort-group">
+          <ArrowUpDown size={16} />
+          <select
+            value={sortBy}
+            onChange={(e) => onSortChange(e.target.value)}
+            className="filter-select"
+          >
+            <option value="default">Default Order</option>
+            <option value="dueDate">Due Date</option>
+            <option value="priority">Priority</option>
           </select>
         </div>
 
